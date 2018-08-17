@@ -1,0 +1,7 @@
+MIMICS code used in this manuscript is available at:
+https://github.com/wwieder/MIMICS/tree/2b7174017f8cfbe4e21f0b6c43a6b158523ce7ae
+
+The relevant files in that repository are:
+MIMICS2_testing_reverse_modfPHYS_Sept7_2016.R (source code)
+Test_SITES_1.csv (site conditions for idealized experiments)
+parameters_LIDET-MIM-REV_test_lowKM.csv (model parameters)

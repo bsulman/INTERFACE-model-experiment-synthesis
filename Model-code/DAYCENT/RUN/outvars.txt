@@ -1,0 +1,12 @@
+strucc(1)
+metabc(1)
+strucc(2)
+metabc(2)
+som1c(1)
+som2c(1)
+som1c(2)
+som2c(2)
+som3c
+somsc
+somtc
+resp(1)

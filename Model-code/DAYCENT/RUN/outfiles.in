@@ -1,0 +1,28 @@
+Output (0/1)    file_name       description
+0               bio.csv         # daily above and below ground live carbon
+0               soiln.csv       # daily soil ammonium and nitrate by layer
+0               soiltavg.csv    # daily average soil temperature by layer
+0               soiltmax.csv    # daily maximum soil temperature by layer
+0               soiltmin.csv    # daily minimum soil temperature by layer
+0               stemp_dx.csv    # daily soil temperature every few cm (HUGE)!
+0               vswc.csv        # daily volumetric soilwater content by layer
+0               watrbal.csv     # daily water balance
+0               wfps.csv        # daily water filled pore space by layer
+0               co2.csv         # daily CO2 concentrations by layer
+0               wflux.csv       # daily water flux through the bottom of soil layers
+0               mresp.csv       # daily maintenance respiration
+0               year_summary.csv    # yearly gas fluxes
+0               livec.csv       # daily live C
+0               deadc.csv       # daily dead C
+1               soilc.csv       # daily soil C
+1               sysc.csv        # daily system C
+0               tgmonth.csv     # monthly trace gas fluxes
+0               dN2lyr.csv      # daily denitrification N2 fluxes by layer
+0               dN2Olyr.csv     # daily denitrification N2O fluxes by layer
+0               gresp.csv       # daily growth respiration
+0               dels.csv        # daily delta 13C/14C values
+0               dc_sip.csv      # daily evap/tran, resp, system C, and NPP
+0               harvest.csv     # state of the system at time of harvest
+1               cflows.csv      # daily carbon flows due to decompostion
+0               year_cflows.csv # annual accumulators of decomp carbon flows
+0               psyndy.csv      # daily photosynthesis values

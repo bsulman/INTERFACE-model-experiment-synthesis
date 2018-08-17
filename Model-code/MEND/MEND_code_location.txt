@@ -1,0 +1,4 @@
+MEND code is available upon request from Gangsheng Wang: 
+https://bitbucket.org/wanggangsheng/
+https://wanggangsheng@bitbucket.org/mend_ornl/mend.git
+The code version used in this manuscript was: aeb9236
