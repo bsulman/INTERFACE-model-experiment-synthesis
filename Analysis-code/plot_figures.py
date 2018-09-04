@@ -384,7 +384,7 @@ def plot_models(clay='medium',litterquality='high',expt='warming2',variable='tot
     return [h_CORPSE[0],h_Daycent[0],h_LBL[0],h_MEND[0],h_MIMICS[0]]
 
 
-def plot_models_range(expt=['warming2'],variable='total_C',do_log=False,**kwargs):
+def plot_models_range(expt=['warming2'],clays=['low','medium','high'],lquals=['low','high'],variable='total_C',do_log=False,**kwargs):
 
     if isinstance(expt,str):
         expts=[expt]
@@ -410,8 +410,8 @@ def plot_models_range(expt=['warming2'],variable='total_C',do_log=False,**kwargs
             )
         if expt=='litter_removal':
             mimics_expt2=[]
-        for clay in ['low','medium','high']:
-            for litterquality in ['low','high']:
+        for clay in clays:
+            for litterquality in lquals:
                 corpse_control.append(load_CORPSE(clay,litterquality,'control').set_index('year')[variable])
                 corpse_expt.append(load_CORPSE(clay,litterquality,experiment=expt).set_index('year')[variable])
                 daycent_control.append(load_Daycent(clay,litterquality,'control').set_index('year')[variable])
@@ -901,7 +901,7 @@ if __name__=='__main__':
     litteraddfig.tight_layout(h_pad=3.0)
 
 
-    figure(11);clf()
+    ##### bar plot of protected fractions #####
     corpse_control_prot=[]
     daycent_control_prot=[]
     lbl_control_prot=[]
@@ -956,6 +956,7 @@ if __name__=='__main__':
     mend_control_litter=array(mend_control_litter)
     mimics_control_litter=array(mimics_control_litter)
 
+    figure(11);clf()
     x=arange(5)
     unprotectedfrac=numpy.array([mean((corpse_control_unprot+corpse_control_litter)/(corpse_control_unprot+corpse_control_litter+corpse_control_prot)),
                                  mean((daycent_control_unprot+daycent_control_litter)/(daycent_control_unprot+daycent_control_litter+daycent_control_prot)),#/1000,
@@ -971,8 +972,17 @@ if __name__=='__main__':
 
 
 
-    prot_h=bar(x,1-unprotectedfrac,yerr=unprotectedfrac_std,color='k',edgecolor='k',width=0.8,label='Protected',ecolor=(0.3,0.3,0.3),capsize=5.0)
+    prot_h=bar(x,1-unprotectedfrac,yerr=unprotectedfrac_std,color='k',edgecolor='k',width=0.8,label='Protected',ecolor=(0.3,0.3,0.3),capsize=3.0)
     unprot_h=bar(x,unprotectedfrac,bottom=1-unprotectedfrac,color='w',edgecolor='k',width=0.8,label='Unprotected')
+
+    # Plot all the actual points
+    clayfactor=array([0.5,0.5,1.5,1.5,3.0,3.0])
+    ms=10.0
+    scatter(random_sample(6)*0.2-0.1,1.0-(corpse_control_unprot+corpse_control_litter)/(corpse_control_unprot+corpse_control_litter+corpse_control_prot),marker='o',color=(0.3,0.3,0.3),s=ms*clayfactor,zorder=10)
+    scatter(random_sample(6)*0.2-0.1+1,1.0-(daycent_control_unprot+daycent_control_litter)/(daycent_control_unprot+daycent_control_litter+daycent_control_prot),marker='o',color=(0.3,0.3,0.3),s=ms*clayfactor,zorder=10)
+    scatter(random_sample(6)*0.2-0.1+2,1.0-(lbl_control_unprot+lbl_control_litter)/(lbl_control_unprot+lbl_control_litter+lbl_control_prot),marker='o',color=(0.3,0.3,0.3),s=ms*clayfactor,zorder=10)
+    scatter(random_sample(6)*0.2-0.1+3,1.0-(mend_control_unprot+mend_control_litter)/(mend_control_unprot+mend_control_litter+mend_control_prot),marker='o',color=(0.3,0.3,0.3),s=ms*clayfactor,zorder=10)
+    scatter(random_sample(6)*0.2-0.1+4,1.0-(mimics_control_unprot+mimics_control_litter)/(mimics_control_unprot+mimics_control_litter+mimics_control_prot),marker='o',color=(0.3,0.3,0.3),s=ms*clayfactor,zorder=10)
 
     # text(1,unprotected[1]+protected[1]+litter[1]+0.1,'%s clay, %s litter quality'%(clay.capitalize(),litterquality.capitalize()),rotation=90,ha='center',va='bottom')
     xticks(arange(5),['CORPSE','Daycent','RESOM','MEND','MIMICS'],ha='center',rotation=30)
@@ -986,6 +996,38 @@ if __name__=='__main__':
 
     tight_layout()
 
+    # Clay and litter quality effects
+    def plot_litqual_clay_effect(var):
+        subplot(221)
+        plot_models_range(expt=['warming2','warming5'],variable=var,zorder=10,do_log=do_log,clays=['high'],ls='-')
+        plot_models_range(expt=['warming2','warming5'],variable=var,zorder=10,do_log=do_log,clays=['low'],ls='--')
+        title('Warming (high and low clay)')
+        letter_label()
+
+        subplot(222)
+        plot_models_range(expt=['warming2','warming5'],variable=var,zorder=10,do_log=do_log,lquals=['high'],ls='-')
+        plot_models_range(expt=['warming2','warming5'],variable=var,zorder=10,do_log=do_log,lquals=['low'],ls='--')
+        title('Warming (high and low litter quality)')
+        letter_label()
+
+        subplot(223)
+        plot_models_range(expt=['litter_addition_100'],variable=var,zorder=10,do_log=do_log,clays=['high'],ls='-')
+        plot_models_range(expt=['litter_addition_100'],variable=var,zorder=10,do_log=do_log,clays=['low'],ls='--')
+        title('Litter addition (high and low clay)')
+        legend(handles=[Line2D([0],[0],c='k',lw=2.0),Line2D([0],[0],ls='--',c='k',lw=2.0)],labels=['High','Low'],title='Clay or litter quality')
+        letter_label()
+
+        subplot(224)
+        h=plot_models_range(expt=['litter_addition_100'],variable=var,zorder=10,do_log=do_log,lquals=['high'],ls='-')
+        plot_models_range(expt=['litter_addition_100'],variable=var,zorder=10,do_log=do_log,lquals=['low'],ls='--')
+        title('Litter addition (high and low litter quality)')
+        legend(handles=h,title='Models')
+        letter_label()
+
+        tight_layout()
+
+    figure('litqual_clay_totalC',figsize=(10.85,7.25));clf()
+    plot_litqual_clay_effect('total_C')
 
 
     # Litter removal
